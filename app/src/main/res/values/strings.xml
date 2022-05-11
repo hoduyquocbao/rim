@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Rust demo</string>
+    <string name="rust_returned_class">Returned class: %s</string>
+    <string name="rust_callback_called">Callback called with: %s</string>
+</resources>
