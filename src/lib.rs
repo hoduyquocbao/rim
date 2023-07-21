@@ -510,19 +510,19 @@ mod tests {
     use std::fs;
     use tempfile::tempdir;
 
-    // Khai báo một hàm để tạo một đối tượng lưu trữ tạm thời với tên và quyền truy cập cho trước
+        // Khai báo một hàm để tạo một đối tượng lưu trữ tạm thời với tên và quyền truy cập cho trước
     fn create_temp_storage(name: &str, access: Access) -> io::Result<Storage> {
-        // Tạo một thư mục tạm thời
-        let dir = tempdir()?;
-
-        // Lấy ra đường dẫn của thư mục tạm thời
-        let path = dir.path();
+        // Lấy ra đường dẫn của thư mục tạm thời của hệ thống
+        let temp_dir = env::temp_dir();
 
         // Tạo một đường dẫn mới bằng cách nối tên của đối tượng lưu trữ vào đường dẫn của thư mục tạm thời
-        let storage_path = path.join(name);
+        let path = temp_dir.join(name);
+
+        // Tạo một thư mục mới với đường dẫn mới
+        fs::create_dir_all(&path)?;
 
         // Tạo một đối tượng lưu trữ mới với đường dẫn mới và quyền truy cập cho trước
-        let storage = Storage::new(storage_path.to_str().unwrap(), access)?;
+        let storage = Storage::new(path.to_str().unwrap(), access)?;
 
         // Trả về đối tượng lưu trữ mới với kết quả Ok
         Ok(storage)
